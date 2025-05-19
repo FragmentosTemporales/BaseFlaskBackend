@@ -2,7 +2,6 @@ from flask.cli import FlaskGroup
 from app import create_app
 import click
 import logging
-from app.models import Usuario
 from app.schemas import usuario_schema
 
 
@@ -16,9 +15,6 @@ def create_user(correo, clave):
     """ Create user in the platform by command line interface """
     # python manage.py create-user --correo=correo --clave=clave
 
-    if Usuario.exists(correo):
-        print("El usuario ya existe en la base de datos.")
-        return
     try:
         user_data = {
             "correo": correo.lower(),
@@ -27,8 +23,14 @@ def create_user(correo, clave):
         user_obj = usuario_schema.load(user_data)
         user_obj.set_clave(clave)
         user_obj.set_correo_lower(correo)
-        user_obj.save_to_db()
-        print("Usuario creado correctamente.")
+
+        exist = user_obj.exists(correo)
+
+        if exist:
+            print("El correo ya existe.")
+        else:
+            user_obj.save_to_db()
+            print("Usuario creado correctamente.")
     except Exception as e:
         error_message = str(e)
         print(f"Printeando error: {error_message}")

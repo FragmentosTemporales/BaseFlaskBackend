@@ -41,6 +41,19 @@ class TestUsuarioModel(BaseTestCase):
                     getattr(user, key), self.data.get(key, None))
         self.assertTrue(user.check_clave(self.data.get("clave", None)))
 
+    def test_create_fails_because_email_already_taken(self):
+        """ Test create user fails because email already taken """
+        save_usuario_to_db(self.data)
+        res = save_usuario_to_db(self.data)
+        error = "Email already exists"
+        mssge = res[0]['error']
+        self.assertEqual(error, mssge)
+
+    def test_email_normalized(self):
+        """ Test user email is normalized after save into db """
+        user = save_usuario_to_db(self.data_correo_upper)
+        self.assertEqual(user.correo, self.data_correo_upper["correo"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()
