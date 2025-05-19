@@ -2,3 +2,5 @@
 venv/
 migrations/
 .env
+dbBase.db
+dbTest.db
