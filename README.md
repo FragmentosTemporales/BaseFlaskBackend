@@ -11,7 +11,7 @@ $ git clone https://github.com/FragmentosTemporales/BaseFlaskBackend.git
 
 ### Variables de entorno
 
-Al interior de la carpeta /Sripts debes crear un documento env.env el cual debe contener las siguiente variables, puedes guiarte con el documento example.env :
+A la altura de example.env debes crear un documento ".env" el cual debe contener las siguiente variables:
 
 ```
 FLASK_ENV=dev
