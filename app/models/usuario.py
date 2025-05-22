@@ -6,7 +6,7 @@ class Usuario(Base):
     __tablename__ = 'usuario'
     usuarioID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     correo = db.Column(db.String(100), nullable=False)
-    clave = db.Column(db.String(128), nullable=False)
+    clave = db.Column(db.String(250), nullable=False)
 
     def set_clave(self, clave):
         """ Setting clave for usuario """

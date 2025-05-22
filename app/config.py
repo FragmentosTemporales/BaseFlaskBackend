@@ -21,8 +21,9 @@ class BaseConfig:
 
 class DevConfig(BaseConfig):
     """ Development configuration class """
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(
-        basedir, "..", 'dbBase.db')
+    POSTGRES_USER = s.dbuser
+    POSTGRES_PASSWORD = s.dbpassword
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/dbDesafio"
     pool_reset_on_return = None
 
 
