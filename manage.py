@@ -14,7 +14,7 @@ cli = FlaskGroup(create_app=create_app)
 @click.option("--clave", required=True)
 def create_user(correo, clave):
     """ Create user in the platform by command line interface """
-    # python manage.py create-user --correo=cristian.rivera3284@gmail.com --clave=Dante123.
+    # python manage.py create-user --correo=example@correo.com --clave=Clave123.
 
     try:
         user_data = {
