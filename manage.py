@@ -3,6 +3,7 @@ from app import create_app
 import click
 import logging
 from app.schemas import usuario_schema
+from app.sql import MyEngine
 
 
 cli = FlaskGroup(create_app=create_app)
@@ -56,6 +57,11 @@ def test(test_name=None):
 def ejecutador():
     try:
         print("### EJECUTANDO QUERY ###")
+        eng = MyEngine()
+        query = "SELECT * FROM usuario"
+        result = eng.query(query)
+        print(result)
+        print("### QUERY EJECUTADA ###")
 
     except Exception as e:
         print(f"Error : {e}")
