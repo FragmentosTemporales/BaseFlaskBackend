@@ -15,11 +15,15 @@ A la altura de example.env debes crear un documento ".env" el cual debe contener
 
 ```
 FLASK_ENV=dev
-
 JWT_SECRET_KEY=
 JWT_ACCESS_TOKEN_EXPIRES_HOURS=
 JWT_ACCESS_TOKEN_EXPIRES_DAYS=
 SECRET_KEY=
+
+DBUSER=
+DBPASSWORD=
+DBHOST=
+DBSCHEMA=
 
 ```
 
