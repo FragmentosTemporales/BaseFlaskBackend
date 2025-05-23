@@ -10,9 +10,10 @@ migrate = Migrate()
 class Base(db.Model):
     """Model that contains base database models."""
     __abstract__ = True
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
     fecha_registro = db.Column(
         db.DateTime, nullable=False, default=lambda: dt.datetime.now(
-            dt.UTC)-dt.timedelta(hours=4))
+            dt.UTC))
 
     def save_to_db(self):
         """Save instance to the database."""
@@ -42,3 +43,8 @@ class Base(db.Model):
     def get_all(cls):
         """ Get all from db """
         return cls.query.all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        """ Find data by id """
+        return cls.query.filter_by(id=id).first()

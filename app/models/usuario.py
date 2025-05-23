@@ -4,9 +4,10 @@ from .db import db, Base
 
 class Usuario(Base):
     __tablename__ = 'usuario'
-    usuarioID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     correo = db.Column(db.String(100), nullable=False)
     clave = db.Column(db.String(250), nullable=False)
+    nombre = db.Column(db.String(250), nullable=False)
+    numDoc = db.Column(db.String(20), nullable=False)
 
     def set_clave(self, clave):
         """ Setting clave for usuario """
@@ -25,12 +26,6 @@ class Usuario(Base):
         """ Find user by correo address """
         correo_lower = correo.lower()
         return cls.query.filter_by(correo=correo_lower).first()
-
-    @classmethod
-    def find_by_id(cls, usuarioID):
-        """ Find user by correo address """
-        id = usuarioID
-        return cls.query.filter_by(usuarioID=id).first()
 
     @staticmethod
     def exists(correo):

@@ -12,14 +12,18 @@ cli = FlaskGroup(create_app=create_app)
 @cli.command("create-user")
 @click.option("--correo", required=True)
 @click.option("--clave", required=True)
-def create_user(correo, clave):
+@click.option("--nombre", required=True)
+@click.option("--numdoc", required=True)
+def create_user(correo, clave, nombre, numdoc):  # <-- aquí en minúsculas
     """ Create user in the platform by command line interface """
-    # python manage.py create-user --correo=example@correo.com --clave=Clave123.
+    # python manage.py create-user --correo=cristian.example@correo.com --clave=Clave123. --nombre=Cristian --numdoc=17523395-4
 
     try:
         user_data = {
             "correo": correo.lower(),
-            "clave": clave
+            "clave": clave,
+            "nombre": nombre,
+            "numDoc": numdoc
         }
         user_obj = usuario_schema.load(user_data)
         user_obj.set_clave(clave)
