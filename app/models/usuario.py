@@ -3,6 +3,22 @@ from .db import db, Base
 
 
 class Usuario(Base):
+    """ SQLAlchemy model for Usuario 
+    This model represents a user in the system with attributes such as correo, clave, nombre, and numDoc.
+    It includes methods for setting and checking the password, finding a user by correo, and checking if a user exists.
+    It also includes a method to save the user to the database.
+    Attributes:
+        correo (str): The user's email address.
+        clave (str): The user's password.
+        nombre (str): The user's name.
+        numDoc (str): The user's document number.
+    Methods:
+        set_clave(clave): Sets the user's password after hashing it.
+        set_correo_lower(correo): Sets the user's email address in lowercase.
+        check_clave(clave): Checks if the provided password matches the stored hashed password.
+        find_by_correo(correo): Finds a user by their email address.
+        exists(correo): Checks if a user with the given email address exists in the database
+    """
     __tablename__ = 'usuario'
     correo = db.Column(db.String(100), nullable=False)
     clave = db.Column(db.String(250), nullable=False)

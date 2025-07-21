@@ -4,6 +4,7 @@ import click
 import logging
 from app.schemas import usuario_schema
 from app.sql import MyEngine
+from typing import List
 
 
 cli = FlaskGroup(create_app=create_app)
@@ -58,17 +59,12 @@ def test(test_name=None):
 
 
 @cli.command("e")
-def ejecutador():
+def ejecutador() -> dict:
     try:
-        print("### EJECUTANDO QUERY ###")
-        eng = MyEngine()
-        query = "SELECT * FROM usuario"
-        result = eng.query(query)
-        print(result)
-        print("### QUERY EJECUTADA ###")
-
+        print("Ejecutando el ejecutador...")
     except Exception as e:
-        print(f"Error : {e}")
+        print(f"Error de validación: {e}")
+        return str(e)
 
 
 if __name__ == "__main__":
