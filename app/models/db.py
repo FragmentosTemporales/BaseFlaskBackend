@@ -42,7 +42,7 @@ class Base(db.Model):
     @classmethod
     def get_all(cls):
         """ Get all from db """
-        return cls.query.all()
+        return cls.query.order_by(cls.fecha_registro.desc()).all()
 
     @classmethod
     def find_by_id(cls, id):

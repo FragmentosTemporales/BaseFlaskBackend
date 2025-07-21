@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "correo": "example@mail.com",
+    "nombre": "cristian",
+    "numDoc": "17523395-4",
+    "fecha_registro": "2025-07-21T18:36:22.871589",
+    "proyectos": [
+      {
+        "id": 1,
+        "nombre": "Proyecto de prueba",
+        "descripcion": "Descripción del proyecto de prueba",
+        "usuario_id": 1,
+        "fecha_registro": "2025-07-21T18:39:09.099303",
+        "tareas": [
+          {
+            "id": 2,
+            "titulo": "tarea de prueba",
+            "descripcion": "descripcion de prueba",
+            "proyecto_id": 1,
+            "estado_tarea_id": 1,
+            "fecha_registro": "2025-07-21T19:21:30.960556",
+            "estado_tarea": {
+              "id": 1,
+              "descripcion": "Pendiente"
+            }
+          },
+          {
+            "id": 3,
+            "titulo": "tarea de prueba 2",
+            "descripcion": "descripcion de prueba 2",
+            "proyecto_id": 1,
+            "estado_tarea_id": 2,
+            "fecha_registro": "2025-07-21T19:34:36.604537",
+            "estado_tarea": {
+              "id": 2,
+              "descripcion": "En Progreso"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

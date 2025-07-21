@@ -25,6 +25,8 @@ class Usuario(Base):
     nombre = db.Column(db.String(250), nullable=False)
     numDoc = db.Column(db.String(20), nullable=False)
 
+    proyectos = db.relationship('Proyecto', back_populates='usuario')
+
     def set_clave(self, clave):
         """ Setting clave for usuario """
         self.clave = generate_password_hash(clave)

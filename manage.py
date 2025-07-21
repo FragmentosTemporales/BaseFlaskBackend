@@ -2,9 +2,9 @@ from flask.cli import FlaskGroup
 from app import create_app
 import click
 import logging
-from app.schemas import usuario_schema
-from app.sql import MyEngine
-from typing import List
+from app.schemas import *
+from app.models.usuario_model import Usuario
+from app.models.proyecto_model import Proyecto, Tarea
 
 
 cli = FlaskGroup(create_app=create_app)
@@ -62,6 +62,9 @@ def test(test_name=None):
 def ejecutador() -> dict:
     try:
         print("Ejecutando el ejecutador...")
+        data = Usuario.get_all()  # Asumiendo que el usuario con ID 1 ya existe
+        list = usuarios_schema.dump(data)
+        print(list)
     except Exception as e:
         print(f"Error de validación: {e}")
         return str(e)

@@ -1,1 +1,2 @@
-from .usuario import usuario_schema, usuarios_schema, UsuarioSchema
+from .usuario_schema import *
+from .proyecto_schema import *

@@ -26,8 +26,9 @@ class DevConfig(BaseConfig):
     POSTGRES_HOST = s.dbhost
     POSTGRES_SCHEMA = s.dbschema
     SQLALCHEMY_DATABASE_URI = (
-    f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_SCHEMA}"
-)
+        f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@'
+        f'{POSTGRES_HOST}/{POSTGRES_SCHEMA}'
+    )
     pool_reset_on_return = None
 
 

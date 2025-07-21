@@ -14,6 +14,7 @@ class BaseSchema(SQLAlchemyAutoSchema):
 
 
 class UsuarioSchema(BaseSchema):
+    proyectos = fields.Nested('ProyectoSchema', many=True)
     class Meta(BaseSchema.Meta):
         model = Usuario
         load_instance = True
@@ -53,34 +54,6 @@ class UsuarioSchema(BaseSchema):
     )
 
 
-# Esquema para actualización (campos opcionales)
-class UsuarioUpdateSchema(UsuarioSchema):
-    class Meta(UsuarioSchema.Meta):
-        pass
-
-    # Hacer campos opcionales para actualización
-    correo = fields.Email(
-        validate=[
-            validate.Email()
-        ]
-    )
-
-    nombre = fields.String(
-        validate=[
-            validate.Length(min=2, max=250),
-            validate.Regexp(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$')
-        ]
-    )
-
-    numDoc = fields.String(
-        validate=[
-            validate.Length(min=7, max=20)
-        ]
-    )
-
-
 # Instancias de los esquemas
 usuario_schema = UsuarioSchema()
 usuarios_schema = UsuarioSchema(many=True)
-usuario_update_schema = UsuarioUpdateSchema()
-usuarios_update_schema = UsuarioUpdateSchema(many=True)
