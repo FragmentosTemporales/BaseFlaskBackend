@@ -13,22 +13,28 @@ class BaseSchema(SQLAlchemyAutoSchema):
 
 
 class ProyectoSchema(BaseSchema):
-    tareas = fields.Nested('TareaSchema', many=True)
+    tareas = fields.Nested(
+        'TareaSchema',
+        many=True)
+
     class Meta(BaseSchema.Meta):
         model = Proyecto
+        include_fk = True
+
+
+class TareaSchema(BaseSchema):
+    estado_tarea = fields.Nested(
+        'EstadoTareaSchema',
+        many=True)
+
+    class Meta(BaseSchema.Meta):
+        model = Tarea
         include_fk = True
 
 
 class EstadoTareaSchema(BaseSchema):
     class Meta(BaseSchema.Meta):
         model = EstadoTarea
-        include_fk = True
-
-
-class TareaSchema(BaseSchema):
-    estado_tarea = fields.Nested('EstadoTareaSchema', only=['descripcion'])
-    class Meta(BaseSchema.Meta):
-        model = Tarea
         include_fk = True
 
 

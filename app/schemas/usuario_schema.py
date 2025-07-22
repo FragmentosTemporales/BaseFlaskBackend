@@ -1,8 +1,7 @@
 from flask_marshmallow import Marshmallow
 from marshmallow_sqlalchemy import auto_field, SQLAlchemyAutoSchema
-from marshmallow import fields, validate, validates, validates_schema, ValidationError
-import re
-from ..models import Usuario, db
+from marshmallow import fields, validate
+from ..models import db, Usuario, Rol
 
 ma = Marshmallow()
 
@@ -15,9 +14,11 @@ class BaseSchema(SQLAlchemyAutoSchema):
 
 class UsuarioSchema(BaseSchema):
     proyectos = fields.Nested('ProyectoSchema', many=True)
+    rol = fields.Nested('RolSchema')
     class Meta(BaseSchema.Meta):
         model = Usuario
         load_instance = True
+        include_fk = True
 
     correo = fields.Email(
         required=True,
@@ -54,6 +55,32 @@ class UsuarioSchema(BaseSchema):
     )
 
 
+class RolSchema(BaseSchema):
+    class Meta(BaseSchema.Meta):
+        model = Rol
+        load_instance = True
+
+    nombre = fields.String(
+        required=True,
+        validate=[
+            validate.Length(min=2, max=100, error="El nombre del rol debe tener entre 2 y 100 caracteres"),
+            validate.Regexp(
+                regex=r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$',
+                error="El nombre del rol solo puede contener letras y espacios"
+            )
+        ]
+    )
+
+    descripcion = fields.String(
+        required=False,
+        validate=validate.Length(max=250, error="La descripción no puede exceder los 250 caracteres")
+    )
+
+
+
 # Instancias de los esquemas
 usuario_schema = UsuarioSchema()
 usuarios_schema = UsuarioSchema(many=True)
+
+rol_schema = RolSchema()
+roles_schema = RolSchema(many=True)

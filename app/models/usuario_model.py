@@ -24,8 +24,12 @@ class Usuario(Base):
     clave = db.Column(db.String(250), nullable=False)
     nombre = db.Column(db.String(250), nullable=False)
     numDoc = db.Column(db.String(20), nullable=False)
+    area_id = db.Column(db.Integer, db.ForeignKey('area.id', ondelete='CASCADE'), nullable=True)
+    rol_id = db.Column(db.Integer, db.ForeignKey('rol.id', ondelete='CASCADE'), nullable=False)
 
     proyectos = db.relationship('Proyecto', back_populates='usuario')
+    area = db.relationship('Area', back_populates='usuarios')
+    rol = db.relationship('Rol', back_populates='usuarios')
 
     def set_clave(self, clave):
         """ Setting clave for usuario """
@@ -45,6 +49,11 @@ class Usuario(Base):
         correo_lower = correo.lower()
         return cls.query.filter_by(correo=correo_lower).first()
 
+    @classmethod
+    def find_all_by_empresa(cls, empresa_id):
+        """ Find all users by empresa ID """
+        return cls.query.filter_by(empresa_id=empresa_id).all()
+
     @staticmethod
     def exists(correo):
         """ Check if user exists """
@@ -54,3 +63,23 @@ class Usuario(Base):
         if usuario:
             return True
         return False
+
+
+class Rol(Base):
+    """ SQLAlchemy model for Rol
+    This model represents a role in the system with attributes such as nombre and descripcion.
+    It includes methods to save the role to the database and retrieve all roles.
+    Attributes:
+        nombre (str): The name of the role.
+        descripcion (str): A description of the role.
+    """
+    __tablename__ = 'rol'
+    nombre = db.Column(db.String(100), nullable=False)
+    descripcion = db.Column(db.String(250), nullable=True)
+
+    usuarios = db.relationship('Usuario', back_populates='rol')
+
+    @classmethod
+    def find_all(cls):
+        """ Find all roles """
+        return cls.query.all()  
