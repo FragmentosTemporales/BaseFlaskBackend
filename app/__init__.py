@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from rich import print
 from .config import config
-from .settings import settings as s
 from .models import db, migrate
 from .routes import jwt, main, cors
 from .routes.usuario_route import usuario
@@ -17,9 +16,8 @@ def create_app(test_mode=False):
         print("[bold yellow]Modo de prueba activado.[/bold yellow]")
 
     else:
+        app.config.from_object(config["dev"])
         print("[bold yellow]Modo de producción activado.[/bold yellow]")
-        env = s.flask_env
-        app.config.from_object(config[env])
 
     db.init_app(app)
     migrate.init_app(app, db)

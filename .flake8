@@ -3,4 +3,5 @@ exclude =
     migrations
     __pycache__,
     venv,
-    logs
+    ,
+    __init__.py,

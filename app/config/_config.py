@@ -1,9 +1,28 @@
 import os
 from datetime import timedelta
-from .settings import settings as s
+from pydantic_settings import BaseSettings
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Settings(BaseSettings):
+
+    jwt_secret_key: str
+    jwt_access_token_expires_hours: int
+    jwt_access_token_expires_days: int
+    secret_key: str
+
+    dbuser: str
+    dbpassword: str
+    dbhost: str
+    dbschema: str
+
+    class Config:
+        env_file = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
+
+
+s = Settings()
 
 
 class BaseConfig:
@@ -37,7 +56,7 @@ class TestConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(
-        basedir, "..", 'dbTest.db'
+        basedir, "..", "..", 'dbTest.db'
     )
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False

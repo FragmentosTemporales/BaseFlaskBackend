@@ -2,6 +2,7 @@ import unittest
 from tests import BaseTestCase
 from tests.utils.usuario import save_usuario_to_db
 from app.schemas import UsuarioSchema
+from app.models import Rol
 
 
 usuario_schema = UsuarioSchema()
@@ -13,13 +14,24 @@ class TestUsuarioModel(BaseTestCase):
     def setUp(self):
         """ Setting up the test class  """
         super().setUp()
+
+        # Create a test role first
+        test_rol = Rol(nombre="Test Role", descripcion="Role for testing")
+        test_rol.save_to_db()
+
         self.data = {
             "correo": "example@example.com",
-            "clave": "12345",
+            "clave": "password123.",
+            "nombre": "Test Usuario",
+            "numDoc": "12345678",
+            "rol_id": test_rol.id
         }
         self.data_correo_upper = {
             "correo": "correo@EXAMPLE.COM",
-            "clave": "12345",
+            "clave": "password123.",
+            "nombre": "Test Usuario Upper",
+            "numDoc": "87654321",
+            "rol_id": test_rol.id
         }
         self.params = {
             "correo": "test@test.com",
@@ -34,7 +46,7 @@ class TestUsuarioModel(BaseTestCase):
     def test_create_success(self):
         """ Test create user is success """
         user = save_usuario_to_db(self.data)
-        self.assertIsNotNone(user.usuarioID)
+        self.assertIsNotNone(user.id)
         for key in self.data.keys():
             if key != "clave":
                 self.assertEqual(

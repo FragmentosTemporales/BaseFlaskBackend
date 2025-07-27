@@ -10,7 +10,7 @@ migrate = Migrate()
 class Base(db.Model):
     """Model that contains base database models."""
     __abstract__ = True
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fecha_registro = db.Column(
         db.DateTime, nullable=False, default=lambda: dt.datetime.now(
             dt.UTC))

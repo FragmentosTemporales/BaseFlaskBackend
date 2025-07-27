@@ -1,11 +1,10 @@
 from flask import Blueprint, jsonify
 from flask_jwt_extended import (
     get_jwt_identity,
-    jwt_required,
-    create_access_token
+    jwt_required
 )
-from app.models import *
-from app.schemas import *
+from app.models import Usuario
+from app.schemas import usuarios_schema
 
 
 usuario = Blueprint("usuario", __name__)

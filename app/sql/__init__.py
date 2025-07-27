@@ -1,7 +1,7 @@
 import pandas as pd
 from rich import print
 from sqlalchemy import create_engine, text
-from ..settings import settings as s
+from ..config import s
 
 
 class MyEngine():
@@ -15,16 +15,16 @@ class MyEngine():
         POSTGRES_SCHEMA = s.dbschema
 
         self.engine = create_engine(f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_SCHEMA}',
-                                        pool_reset_on_return=None)
-        
+                                    pool_reset_on_return=None)
+
         print(f"[bold green]Conexión a la base de datos establecida con éxito.[/bold green]")
 
-    def execute(self,query):
+    def execute(self, query):
         print(query)
         with self.engine.connect() as conn:
             conn.execute(text(query))
             conn.commit()
-            return 
+            return
 
     def query(self, query):
         return pd.read_sql_query(query, con=self.engine)

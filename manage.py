@@ -3,9 +3,16 @@ from app import create_app
 import click
 import logging
 from rich import print
-from app.schemas import *
-from app.models.usuario_model import Usuario
-from app.models.proyecto_model import Proyecto, Tarea
+from app.schemas import (
+    empresa_schema,
+    estado_tarea_schema,
+    proyecto_schema,
+    rol_schema,
+    tarea_schema,
+    usuario_schema,
+    area_schema
+    )
+from app.models import Empresa
 from app.sql import MyEngine
 
 
@@ -19,7 +26,6 @@ cli = FlaskGroup(create_app=create_app)
 @click.option("--numdoc", required=True)
 def create_user(correo, clave, nombre, numdoc):  # <-- aquí en minúsculas
     """ Create user in the platform by command line interface """
-    # python manage.py create-user --correo=cristian.example@correo.com --clave=Clave123. --nombre=Cristian --numdoc=17523395-4
 
     try:
         user_data = {
@@ -86,6 +92,7 @@ def ejecutador_user() -> dict:
         print(f"Error de validación: {e}")
         return str(e)
 
+
 @cli.command("emp")
 def ejecutador_emp() -> dict:
     try:
@@ -102,6 +109,7 @@ def ejecutador_emp() -> dict:
         print(f"Error de validación: {e}")
         return str(e)
 
+
 @cli.command("rol")
 def ejecutador_rol() -> dict:
     try:
@@ -116,6 +124,7 @@ def ejecutador_rol() -> dict:
     except Exception as e:
         print(f"Error de validación: {e}")
         return str(e)
+
 
 @cli.command("area")
 def ejecutador_area() -> dict:
@@ -149,6 +158,7 @@ def ejecutador_proyecto() -> dict:
         print(f"Error de validación: {e}")
         return str(e)
 
+
 @cli.command("tarea")
 def ejecutador_tarea() -> dict:
     try:
@@ -165,6 +175,7 @@ def ejecutador_tarea() -> dict:
         print(f"Error de validación: {e}")
         return str(e)
 
+
 @cli.command("estado_tarea")
 def ejecutador_estado_tarea() -> dict:
     try:
@@ -174,11 +185,14 @@ def ejecutador_estado_tarea() -> dict:
         }
         estado_tarea_obj = estado_tarea_schema.load(estado_tarea_data)
         estado_tarea_obj.save_to_db()
-        print("[bold red] # Estado de tarea creado correctamente  # [/bold red]")
+        print(
+            "[bold red] Estado de tarea creado correctamente [/bold red]"
+            )
 
     except Exception as e:
         print(f"Error de validación: {e}")
         return str(e)
+
 
 @cli.command("sql")
 def sql_executor():
@@ -191,6 +205,7 @@ def sql_executor():
     except Exception as e:
         print(f"Error al ejecutar la consulta SQL: {e}")
 
+
 @cli.command("get")
 def db_executor():
     """ Ejecuta una consulta SQL para crear tablas """
@@ -200,6 +215,7 @@ def db_executor():
         print(f"[bold green] # Empresa: {empresa}  # [/bold green]")
     except Exception as e:
         print(f"Error al crear la tabla: {e}")
+
 
 if __name__ == "__main__":
     cli()
